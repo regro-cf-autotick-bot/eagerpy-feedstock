@@ -6,24 +6,26 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: bd9cb9170dcb9eeb25b6fd90c827c665322f4e78b12ce845b93052f04d3a9408
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv
   noarch: python
 
 requirements:
   host:
     - pip
-    - python
+    - python {{ python_min }}
   run:
     - numpy
-    - python
+    - python >={{ python_min }}
     - typing-extensions >=3.7.4.1
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - eagerpy
     - eagerpy.tensor
